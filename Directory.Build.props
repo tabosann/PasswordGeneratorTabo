@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+	<IsPackaged>true</IsPackaged>
+	<IsPackaged Condition="'$(Configuration)'=='Debug_Unpackaged' or '$(Configuration)'=='Release_Unpackaged'">false</IsPackaged>
+  </PropertyGroup>
+</Project>
