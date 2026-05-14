@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PasswordGeneratorTabo (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "PasswordGeneratorTabo (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
