@@ -13,7 +13,37 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
+    <Grid Name="m_rootGrid" Loaded="RootGridLoaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <TitleBar x:Name="m_titleBar" Title="Password Generator Tabo" Height="48">
+            <TitleBar.IconSource>
+                <FontIconSource Glyph="&#xE8D7;"/>
+            </TitleBar.IconSource>
+        </TitleBar>
+
+        <Grid Grid.Row="1" Margin="40,0,40,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Spacing="12">
+                <Button Grid.Row="1" Content="Copy" Click="CopyTextClick"/>
+                <TextBox x:Uid="PasswordTextBox" x:Name="m_passwordTextBox" IsReadOnly="True" FontFamily="Consolas"/>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Slider x:Name="m_slider" HorizontalAlignment="Left" Width="200"
+                            Minimum="4" Maximum="32" StepFrequency="1" Value="16"
+                            ValueChanged="PasswordLengthChanged"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Uid="CheckBox0" x:Name="m_numbersCheckBox"/>
+                    <CheckBox x:Uid="CheckBox1" x:Name="m_symbolsCheckBox"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
