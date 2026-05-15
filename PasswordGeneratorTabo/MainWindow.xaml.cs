@@ -37,7 +37,7 @@ namespace PasswordGeneratorTabo
         private void RootGridLoaded(object sender, RoutedEventArgs e)
         {
             Helpers.WindowHelper.FitClientToActualSize(this, m_rootGrid);
-            Helpers.WindowHelper.ResizeClinetWithDpiScale(this, 950, m_rootGrid.DesiredSize.Height + 300);
+            Helpers.WindowHelper.ResizeClinetWithDpiScale(this, 950, 590);
             var presenter = AppWindow.Presenter as OverlappedPresenter;
             if (presenter != null) {
                 // リサイズや最大化を無効化.
@@ -115,6 +115,7 @@ namespace PasswordGeneratorTabo
             }
 
             SetClipboradContent(selected.Value);
+            m_copiedText.Visibility = Visibility.Visible;
             m_storyboardCopiedNotification.Begin();
         }
 

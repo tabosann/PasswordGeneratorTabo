@@ -38,50 +38,57 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- パスワードの生成オプションを決める領域 -->
-            <StackPanel Orientation="Vertical" Spacing="12" VerticalAlignment="Center">
-                <StackPanel.Resources>
-                    <Storyboard x:Name="m_storyboardCopiedNotification">
-                        <!-- 表示位置Xをアニメーション -->
-                        <DoubleAnimation Storyboard.TargetName="m_copiedTextTransform" Storyboard.TargetProperty="X" From="100" To="0">
-                            <DoubleAnimation.EasingFunction>
-                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
-                            </DoubleAnimation.EasingFunction>
-                        </DoubleAnimation>
-                        <!-- 不透明度をアニメーション -->
-                        <DoubleAnimation Storyboard.TargetName="m_copiedText" Storyboard.TargetProperty="Opacity" From="0" To="1">
-                            <DoubleAnimation.EasingFunction>
-                                <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
-                            </DoubleAnimation.EasingFunction>
-                        </DoubleAnimation>
-                    </Storyboard>
-                </StackPanel.Resources>
-
-                <!-- パスワードの文字数を決める -->
-                <Slider x:Name="m_slider" HorizontalAlignment="Left" Width="200"
-                        Minimum="4" Maximum="32" StepFrequency="1" Value="16"
-                        Loaded="PasswordLengthSliderLoaded"
-                        ValueChanged="PasswordLengthChanged"/>
-
-                <!-- パスワードのオプションを決める -->
-                <StackPanel Orientation="Horizontal">
-                    <CheckBox x:Uid="CheckBox0" x:Name="m_numbersCheckBox"/>
-                    <CheckBox x:Uid="CheckBox1" x:Name="m_symbolsCheckBox"/>
-                </StackPanel>
-
-                <!-- パスワードの生成を更新 -->
-                <Button x:Uid="UpdateButton" Click="UpdateButtonClick"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="7*"/>
+                </Grid.RowDefinitions>
 
                 <!-- パスワードのコピー通知 -->
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" Spacing="8">
                     <TextBlock x:Uid="CopiedNotificationTitle"/>
-                    <TextBlock x:Uid="CopiedNotification"  x:Name="m_copiedText">
+                    <TextBlock x:Uid="CopiedNotification"  x:Name="m_copiedText" Visibility="Collapsed">
                         <TextBlock.RenderTransform>
                             <TranslateTransform x:Name="m_copiedTextTransform"/>
                         </TextBlock.RenderTransform>
                     </TextBlock>
                 </StackPanel>
-            </StackPanel>
+
+                <!-- パスワードの生成オプションを決める領域 -->
+                <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top" Spacing="12">
+                    <StackPanel.Resources>
+                        <Storyboard x:Name="m_storyboardCopiedNotification">
+                            <!-- 表示位置Xをアニメーション -->
+                            <DoubleAnimation Storyboard.TargetName="m_copiedTextTransform" Storyboard.TargetProperty="X" From="100" To="0">
+                                <DoubleAnimation.EasingFunction>
+                                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <!-- 不透明度をアニメーション -->
+                            <DoubleAnimation Storyboard.TargetName="m_copiedText" Storyboard.TargetProperty="Opacity" From="0" To="1">
+                                <DoubleAnimation.EasingFunction>
+                                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </StackPanel.Resources>
+
+                    <!-- パスワードの文字数を決める -->
+                    <Slider x:Name="m_slider" HorizontalAlignment="Left" Width="200"
+                            Minimum="4" Maximum="32" StepFrequency="1" Value="16"
+                            Loaded="PasswordLengthSliderLoaded"
+                            ValueChanged="PasswordLengthChanged"/>
+
+                    <!-- パスワードのオプションを決める -->
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Uid="CheckBox0" x:Name="m_numbersCheckBox"/>
+                        <CheckBox x:Uid="CheckBox1" x:Name="m_symbolsCheckBox"/>
+                    </StackPanel>
+
+                    <!-- パスワードの生成を更新 -->
+                    <Button x:Uid="UpdateButton" Click="UpdateButtonClick"/>
+                </StackPanel>
+            </Grid>
 
             <!-- パスワード生成結果を一覧表示 -->
             <ListView x:Name="m_passwordListView"
