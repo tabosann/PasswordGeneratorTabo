@@ -25,25 +25,40 @@
             </TitleBar.IconSource>
         </TitleBar>
 
-        <Grid Grid.Row="1" Margin="40,0,40,0">
+        <Grid Grid.Row="1" Margin="40,0,40,48">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Vertical" Spacing="12">
-                <Button Grid.Row="1" Content="Copy" Click="CopyTextClick"/>
-                <TextBox x:Uid="PasswordTextBox" x:Name="m_passwordTextBox" IsReadOnly="True" FontFamily="Consolas"/>
+            <StackPanel Orientation="Vertical" Spacing="12" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <Slider x:Name="m_slider" HorizontalAlignment="Left" Width="200"
                             Minimum="4" Maximum="32" StepFrequency="1" Value="16"
+                            Loaded="PasswordLengthSliderLoaded"
                             ValueChanged="PasswordLengthChanged"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <CheckBox x:Uid="CheckBox0" x:Name="m_numbersCheckBox"/>
                     <CheckBox x:Uid="CheckBox1" x:Name="m_symbolsCheckBox"/>
                 </StackPanel>
+                <Button x:Uid="UpdateButton" Click="UpdateButtonClick"/>
             </StackPanel>
+            <ListView Grid.Column="1"
+                      x:Name="m_passwordListView"
+                      Loaded="PasswordListViewLoaded"
+                      SelectionChanged="PasswordSelectionChanged">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Password">
+                        <TextBlock Text="{x:Bind Value}" FontFamily="Consolas"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel> 
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal"/>  
+                    </ItemsPanelTemplate> 
+                </ListView.ItemsPanel>
+            </ListView>
         </Grid>
     </Grid>
 </Window>

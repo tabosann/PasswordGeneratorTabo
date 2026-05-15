@@ -13,7 +13,7 @@ namespace PasswordGeneratorTabo.Helpers
             return window.Content.XamlRoot.RasterizationScale;
         }
 
-        private static void ResizeClinetWithDpiScale(Window window, double width, double height)
+        public static void ResizeClinetWithDpiScale(Window window, double width, double height)
         {
             var dpiScale = GetWindowDpiScale(window);
             window.AppWindow.ResizeClient(new SizeInt32(

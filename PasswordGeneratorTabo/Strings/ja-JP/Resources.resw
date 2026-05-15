@@ -129,4 +129,7 @@
   <data name="PasswordLengthLabel" xml:space="preserve">
     <value>文字数</value>
   </data>
+  <data name="UpdateButton.Content" xml:space="preserve">
+    <value>更新</value>
+  </data>
 </root>
