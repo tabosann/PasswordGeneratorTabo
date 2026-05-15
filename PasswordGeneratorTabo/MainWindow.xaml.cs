@@ -37,7 +37,7 @@ namespace PasswordGeneratorTabo
         private void RootGridLoaded(object sender, RoutedEventArgs e)
         {
             Helpers.WindowHelper.FitClientToActualSize(this, m_rootGrid);
-            Helpers.WindowHelper.ResizeClinetWithDpiScale(this, 950, m_rootGrid.DesiredSize.Height + 350);
+            Helpers.WindowHelper.ResizeClinetWithDpiScale(this, 950, m_rootGrid.DesiredSize.Height + 300);
             var presenter = AppWindow.Presenter as OverlappedPresenter;
             if (presenter != null) {
                 // リサイズや最大化を無効化.
@@ -58,11 +58,23 @@ namespace PasswordGeneratorTabo
             }
         }
 
-        private void PasswordLengthSliderLoaded(object sender, RoutedEventArgs e)
+        private void SetClipboradContent(string text)
+        {
+            var package = new DataPackage();
+            package.SetText(text);
+            Clipboard.SetContent(package);
+        }
+
+        private void UpdatePasswordLengthSliderHeader(double value)
         {
             var loader = new ResourceLoader();
             string label = loader.GetString("PasswordLengthLabel");
-            m_slider.Header = String.Format("{0} {1}", label, m_slider.Value);
+            m_slider.Header = String.Format("{0} {1}", label, value);
+        }
+
+        private void PasswordLengthSliderLoaded(object sender, RoutedEventArgs e)
+        {
+            UpdatePasswordLengthSliderHeader(m_slider.Value);
         }
 
         private void PasswordLengthChanged(object sender, RangeBaseValueChangedEventArgs e)
@@ -71,9 +83,7 @@ namespace PasswordGeneratorTabo
                 return;
             }
 
-            var loader = new ResourceLoader();
-            string label = loader.GetString("PasswordLengthLabel");
-            m_slider.Header = String.Format("{0} {1}", label, e.NewValue);
+            UpdatePasswordLengthSliderHeader(e.NewValue);
 
             for (int i = 0; i < m_passwordsCapacity; ++i) {
                 m_passwords[i] = new Password(GeneratePassword((int)e.NewValue), i);
@@ -94,15 +104,18 @@ namespace PasswordGeneratorTabo
             m_passwordListView.ItemsSource = m_passwords;
         }
 
-        private void PasswordSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PasswordItemClick(object sender, ItemClickEventArgs e)
         {
+            Password? selected = e.ClickedItem as Password;
             ListView? listView = sender as ListView;
-            Password? selected = listView?.SelectedItem as Password;
-            if ((selected != null) && (m_passwords != null)) {
-                var package = new DataPackage();
-                package.SetText(m_passwords[selected.Id].Value);
-                Clipboard.SetContent(package);
+            ListViewItem? selectedItem = listView?.ContainerFromIndex(selected?.Id ?? -1) as ListViewItem;
+
+            if (selected == null || selectedItem == null) {
+                return;
             }
+
+            SetClipboradContent(selected.Value);
+            m_storyboardCopiedNotification.Begin();
         }
 
         private string GeneratePassword(int length)

@@ -123,13 +123,16 @@
   <data name="CheckBox1.Content" xml:space="preserve">
     <value>記号あり</value>
   </data>
-  <data name="PasswordTextBox.PlaceholderText" xml:space="preserve">
-    <value>パスワードが表示されます</value>
-  </data>
   <data name="PasswordLengthLabel" xml:space="preserve">
     <value>文字数</value>
   </data>
   <data name="UpdateButton.Content" xml:space="preserve">
     <value>更新</value>
+  </data>
+  <data name="CopiedNotification.Text" xml:space="preserve">
+    <value>コピーしました。</value>
+  </data>
+  <data name="CopiedNotificationTitle.Text" xml:space="preserve">
+    <value>パスワードをクリックしてコピーします。</value>
   </data>
 </root>

@@ -123,13 +123,16 @@
   <data name="CheckBox1.Content" xml:space="preserve">
     <value>Symbols</value>
   </data>
-  <data name="PasswordTextBox.PlaceholderText" xml:space="preserve">
-    <value>Password</value>
-  </data>
   <data name="PasswordLengthLabel" xml:space="preserve">
     <value>Length</value>
   </data>
   <data name="UpdateButton.Content" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="CopiedNotification.Text" xml:space="preserve">
+    <value>Copied.</value>
+  </data>
+  <data name="CopiedNotificationTitle.Text" xml:space="preserve">
+    <value>Clicks password to copy one.</value>
   </data>
 </root>
