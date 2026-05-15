@@ -47,17 +47,6 @@ namespace PasswordGeneratorTabo
             }
         }
 
-        private void UpdateButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (m_passwords == null) {
-                return;
-            }
-
-            for (int i = 0; i < m_passwordsCapacity; ++i) {
-                m_passwords[i] = new Password(GeneratePassword((int)m_slider.Value), i);
-            }
-        }
-
         private void SetClipboradContent(string text)
         {
             var package = new DataPackage();
@@ -72,6 +61,39 @@ namespace PasswordGeneratorTabo
             m_slider.Header = String.Format("{0} {1}", label, value);
         }
 
+        private void UpdatePasswords(int length)
+        {
+            if (m_passwords == null) {
+                return;
+            }
+
+            for (int i = 0; i < PASSWORDS_CAPACITY; ++i) {
+                m_passwords[i] = new Password(GeneratePassword(length), i);
+            }
+        }
+
+        private void UpdateButtonClick(object sender, RoutedEventArgs e)
+        {
+            UpdatePasswords((int)m_slider.Value);
+        }
+
+        private void NumbersChecked(object sender, RoutedEventArgs e)
+        {
+            UpdatePasswords((int)m_slider.Value);
+        }
+        private void SymbolsChecked(object sender, RoutedEventArgs e)
+        {
+            UpdatePasswords((int)m_slider.Value);
+        }
+        private void NumbersUnchecked(object sender, RoutedEventArgs e)
+        {
+            UpdatePasswords((int)m_slider.Value);
+        }
+        private void SymbolsUnchecked(object sender, RoutedEventArgs e)
+        {
+            UpdatePasswords((int)m_slider.Value);
+        }
+
         private void PasswordLengthSliderLoaded(object sender, RoutedEventArgs e)
         {
             UpdatePasswordLengthSliderHeader(m_slider.Value);
@@ -79,25 +101,18 @@ namespace PasswordGeneratorTabo
 
         private void PasswordLengthChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (m_passwords == null) {
-                return;
-            }
-
             UpdatePasswordLengthSliderHeader(e.NewValue);
-
-            for (int i = 0; i < m_passwordsCapacity; ++i) {
-                m_passwords[i] = new Password(GeneratePassword((int)e.NewValue), i);
-            }
+            UpdatePasswords((int)e.NewValue);
         }
 
         private void PasswordListViewLoaded(object sender, RoutedEventArgs e)
         {
-            m_passwords = new ObservableCollection<Password>(new List<Password>(m_passwordsCapacity));
+            m_passwords = new ObservableCollection<Password>(new List<Password>(PASSWORDS_CAPACITY));
             if (m_passwords == null) {
                 return;
             }
 
-            for (int i = 0; i < m_passwordsCapacity; ++i) {
+            for (int i = 0; i < PASSWORDS_CAPACITY; ++i) {
                 var pw = new Password(GeneratePassword((int)m_slider.Value), i);
                 m_passwords.Add(pw);
             }
@@ -115,6 +130,8 @@ namespace PasswordGeneratorTabo
             }
 
             SetClipboradContent(selected.Value);
+
+            // コピー通知を表示.
             m_copiedText.Visibility = Visibility.Visible;
             m_storyboardCopiedNotification.Begin();
         }
@@ -136,7 +153,7 @@ namespace PasswordGeneratorTabo
             return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        const int m_passwordsCapacity = 50;
+        const int PASSWORDS_CAPACITY = 50;
         ObservableCollection<Password>? m_passwords;
     }
 }

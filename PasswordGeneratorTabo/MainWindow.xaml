@@ -81,8 +81,8 @@
 
                     <!-- パスワードのオプションを決める -->
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox x:Uid="CheckBox0" x:Name="m_numbersCheckBox"/>
-                        <CheckBox x:Uid="CheckBox1" x:Name="m_symbolsCheckBox"/>
+                        <CheckBox x:Uid="CheckBox0" x:Name="m_numbersCheckBox" Checked="NumbersChecked" Unchecked="NumbersUnchecked"/>
+                        <CheckBox x:Uid="CheckBox1" x:Name="m_symbolsCheckBox" Checked="SymbolsChecked" Unchecked="SymbolsUnchecked"/>
                     </StackPanel>
 
                     <!-- パスワードの生成を更新 -->
