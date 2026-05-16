@@ -6,6 +6,7 @@ using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.DataTransfer;
@@ -15,6 +16,7 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace PasswordGeneratorTabo
 {
+    [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
     public sealed record Password(string Value, int Id);
 
     /// <summary>
