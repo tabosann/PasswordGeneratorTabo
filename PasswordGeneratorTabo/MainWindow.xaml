@@ -13,7 +13,100 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
+    <Grid Name="m_rootGrid" Loaded="RootGridLoaded">
+        <Grid.Resources>
+            <!-- タイトルバーの高さ(TitleBarHeightOption.Tall の場合) -->
+            <x:Double x:Key="TitleBarHeight">48</x:Double>
+            <!-- Windows提唱のスペーシングデザインに従う -->
+            <Thickness x:Key="ClientMargin">36,0,36,48</Thickness>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <TitleBar x:Name="m_titleBar" Title="Password Generator Tabo" Height="{StaticResource TitleBarHeight}">
+            <TitleBar.IconSource>
+                <FontIconSource Glyph="&#xE8D7;"/>
+            </TitleBar.IconSource>
+        </TitleBar>
+
+        <!-- このグリッド内でパスワードジェネレータのUIを実装する -->
+        <Grid Grid.Row="1" Margin="{StaticResource ClientMargin}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="7*"/>
+                </Grid.RowDefinitions>
+
+                <!-- パスワードのコピー通知 -->
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Spacing="8">
+                    <TextBlock x:Uid="CopiedNotificationTitle"/>
+                    <TextBlock x:Uid="CopiedNotification"  x:Name="m_copiedText" Visibility="Collapsed">
+                        <TextBlock.RenderTransform>
+                            <TranslateTransform x:Name="m_copiedTextTransform"/>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+                </StackPanel>
+
+                <!-- パスワードの生成オプションを決める領域 -->
+                <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top" Spacing="12">
+                    <StackPanel.Resources>
+                        <Storyboard x:Name="m_storyboardCopiedNotification">
+                            <!-- 表示位置Xをアニメーション -->
+                            <DoubleAnimation Storyboard.TargetName="m_copiedTextTransform" Storyboard.TargetProperty="X" From="100" To="0">
+                                <DoubleAnimation.EasingFunction>
+                                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <!-- 不透明度をアニメーション -->
+                            <DoubleAnimation Storyboard.TargetName="m_copiedText" Storyboard.TargetProperty="Opacity" From="0" To="1">
+                                <DoubleAnimation.EasingFunction>
+                                    <ExponentialEase Exponent="7" EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </StackPanel.Resources>
+
+                    <!-- パスワードの文字数を決める -->
+                    <Slider x:Name="m_slider" HorizontalAlignment="Left" Width="200"
+                            Minimum="4" Maximum="32" StepFrequency="1" Value="16"
+                            Loaded="PasswordLengthSliderLoaded"
+                            ValueChanged="PasswordLengthChanged"/>
+
+                    <!-- パスワードのオプションを決める -->
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Uid="CheckBox0" x:Name="m_numbersCheckBox" Checked="NumbersChecked" Unchecked="NumbersUnchecked"/>
+                        <CheckBox x:Uid="CheckBox1" x:Name="m_symbolsCheckBox" Checked="SymbolsChecked" Unchecked="SymbolsUnchecked"/>
+                    </StackPanel>
+
+                    <!-- パスワードの生成を更新 -->
+                    <Button x:Uid="UpdateButton" Click="UpdateButtonClick"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- パスワード生成結果を一覧表示 -->
+            <ListView x:Name="m_passwordListView"
+                      Grid.Column="1"
+                      Loaded="PasswordListViewLoaded"
+                      IsItemClickEnabled="True"
+                      ItemClick="PasswordItemClick">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Password">
+                        <TextBlock Text="{x:Bind Value}" FontFamily="Consolas"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel> 
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal"/>  
+                    </ItemsPanelTemplate> 
+                </ListView.ItemsPanel>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>
