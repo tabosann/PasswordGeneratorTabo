@@ -108,10 +108,6 @@ namespace PasswordGeneratorTabo
         private void PasswordListViewLoaded(object sender, RoutedEventArgs e)
         {
             m_passwords = new ObservableCollection<Password>(new List<Password>(PASSWORDS_CAPACITY));
-            if (m_passwords == null) {
-                return;
-            }
-
             for (int i = 0; i < PASSWORDS_CAPACITY; ++i) {
                 var pw = new Password(GeneratePassword((int)m_slider.Value), i);
                 m_passwords.Add(pw);
