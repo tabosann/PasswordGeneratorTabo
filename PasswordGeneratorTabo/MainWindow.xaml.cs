@@ -6,7 +6,6 @@ using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.DataTransfer;
@@ -16,7 +15,6 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace PasswordGeneratorTabo
 {
-    [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
     public sealed record Password(string Value, int Id);
 
     /// <summary>
@@ -110,10 +108,6 @@ namespace PasswordGeneratorTabo
         private void PasswordListViewLoaded(object sender, RoutedEventArgs e)
         {
             m_passwords = new ObservableCollection<Password>(new List<Password>(PASSWORDS_CAPACITY));
-            if (m_passwords == null) {
-                return;
-            }
-
             for (int i = 0; i < PASSWORDS_CAPACITY; ++i) {
                 var pw = new Password(GeneratePassword((int)m_slider.Value), i);
                 m_passwords.Add(pw);
